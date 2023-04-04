@@ -12,16 +12,15 @@ public class Game : MonoBehaviour
 
     private Player _player;
 
-    void Start()
+    private void Start()
     {
         _player = new Player(_startingPlayerHealth);
-        _player.OnHealthChanged += PlayersHealthChanged;
+        _player.HealthPercentageChanged += _slider.SetValue;
     }
 
-    private void PlayersHealthChanged(int current, int max)
+    private void OnDestroy()
     {
-        float amount = (float)current / max;
-        _slider.SetValue(amount);
+        _player.HealthPercentageChanged -= _slider.SetValue;
     }
 
     public void TakeDamage()
@@ -31,6 +30,6 @@ public class Game : MonoBehaviour
 
     public void HealDamage()
     {
-        _player.HealDamage(_healAmount);
+        _player.Heal(_healAmount);
     }
 }

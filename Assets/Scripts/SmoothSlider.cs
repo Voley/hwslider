@@ -22,6 +22,10 @@ public class SmoothSlider : MonoBehaviour
 
     private void Update()
     {
+        float minimumDifference = 0.001f;
+
+        if (Mathf.Abs(_targetValue - _slider.value) < minimumDifference) return;
+
         _slider.value = Mathf.SmoothDamp(_slider.value, _targetValue, ref _velocity, _animationSpeed);
     }
 

@@ -9,8 +9,7 @@ public class Player
 
     public int Health { get; private set; }
 
-    public event Action<int, int> OnHealthChanged;
-
+    public event Action<float> HealthPercentageChanged;
 
     public Player(int health)
     {
@@ -21,18 +20,12 @@ public class Player
     public void TakeDamage(int damage)
     {
         Health = Mathf.Max(Health - damage, 0);
-        if (OnHealthChanged != null)
-        {
-            OnHealthChanged(Health, _maxHealth);
-        }
+        HealthPercentageChanged?.Invoke((float)Health/_maxHealth);
     }
 
-    public void HealDamage(int amount)
+    public void Heal(int amount)
     {
         Health = Mathf.Min(Health + amount, _maxHealth);
-        if (OnHealthChanged != null)
-        {
-            OnHealthChanged(Health, _maxHealth);
-        }
+        HealthPercentageChanged?.Invoke((float)Health / _maxHealth);
     }
 }
