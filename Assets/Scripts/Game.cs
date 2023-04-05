@@ -12,15 +12,10 @@ public class Game : MonoBehaviour
 
     private Player _player;
 
-    private void Start()
+    private void Awake()
     {
         _player = new Player(_startingPlayerHealth);
-        _player.HealthPercentageChanged += _slider.SetValue;
-    }
-
-    private void OnDestroy()
-    {
-        _player.HealthPercentageChanged -= _slider.SetValue;
+        _slider.Init(_player);
     }
 
     public void TakeDamage()

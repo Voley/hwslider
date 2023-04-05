@@ -5,27 +5,26 @@ using UnityEngine;
 
 public class Player
 {
-    private int _maxHealth;
-
+    public int MaxHealth { get; private set; }
     public int Health { get; private set; }
 
     public event Action<float> HealthPercentageChanged;
 
     public Player(int health)
     {
-        _maxHealth = health;
+        MaxHealth = health;
         Health = health;
     }
 
     public void TakeDamage(int damage)
     {
         Health = Mathf.Max(Health - damage, 0);
-        HealthPercentageChanged?.Invoke((float)Health/_maxHealth);
+        HealthPercentageChanged?.Invoke((float)Health/MaxHealth);
     }
 
     public void Heal(int amount)
     {
-        Health = Mathf.Min(Health + amount, _maxHealth);
-        HealthPercentageChanged?.Invoke((float)Health / _maxHealth);
+        Health = Mathf.Min(Health + amount, MaxHealth);
+        HealthPercentageChanged?.Invoke((float)Health / MaxHealth);
     }
 }
